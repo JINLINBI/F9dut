@@ -23,6 +23,7 @@ class Code_pro(object):
         self.v=VectorCompare()
         self.iconset=['0','1','2','3','4','5','6','7','8','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y']
         self.imageset=[]
+        self.isTrain=True
         for letter in self.iconset:
             for img in os.listdir('./iconset/%s/'%(letter)):
                 temp=[]
@@ -138,7 +139,6 @@ class Code_pro(object):
                 letters.insert(countIndex,(start,mid))
                 del letters[countIndex+2]
             countIndex+=1
-        print letters
         code=""
         for letter in letters:
             im3=im2.crop((letter[0],0,letter[1],im2.size[1]))
@@ -151,6 +151,16 @@ class Code_pro(object):
             guess.sort(reverse=True)
             code+=guess[0][1]
         return code
+    def rightCode(self,codePath):
+        if os.path.isfile(codePath) and self.isTrain==True:
+            os.remove(codePath)
+        else :
+            print "file not exits!"
+        return True
+    def errorCode(self,codePath):
+        if os.path.isfile(codePath):
+            pass
+        return True
     def buildvector(self,im):
         d1={}
         count=0
@@ -158,4 +168,7 @@ class Code_pro(object):
             d1[count]=i
             count+=1
         return d1
-
+if __name__=='__main__':
+    codePath=raw_input("input filename to delete!")
+    code_pro=Code_pro()
+    code_pro.rightCode(codePath)

@@ -34,7 +34,6 @@ class Web_pro(object):
         m.update("%s%s"%(time.time(),103))
         for i in self.cookie:
             cookie=i.name+':'+i.value
-        print cookie
         page=urllib2.urlopen(code_url).read()
         codePath="./codes/%s.gif"%m.hexdigest()
         fp=open(codePath,'wb')
@@ -42,6 +41,7 @@ class Web_pro(object):
         fp.close
         return codePath
     def login(self,login_url,name,passwd,code):
+        print "[+]tring %s:%s[code:%s]"%(name,passwd,code)
 	postdata = urllib.urlencode({
       		'__VIEWSTATE':self.viewState,   		
       		'txtUserName':name,	#std ID
@@ -67,13 +67,12 @@ class Web_pro(object):
 	#loginPage=urllib2.urlopen(request).read()
         if loginPage:
 	    loginInfo=unicode(loginPage,'gb2312').encode("utf-8")
+            return loginInfo
         else :
             return error_info
-        return loginInfo
     def getStudent(self,name):
         for i in self.cookie:
             Cookie=i.name+'='+i.value
-            print Cookie
         page=None
         try :
             request=urllib2.Request("http://jwgldx.gdut.edu.cn/xs_main.aspx?xh=%s"%name)
